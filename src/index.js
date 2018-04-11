@@ -1,28 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export class Checkbox extends React.Component {
-  render() {
-    const { name, checkedValues, onChange } = this.context.checkboxGroup;
-    const optional = {};
-    if (checkedValues) {
-      optional.checked = (checkedValues.indexOf(this.props.value) >= 0);
-    }
-    if (typeof onChange === 'function') {
-      optional.onChange = onChange.bind(null, this.props.value);
-    }
+const { Provider, Consumer } = React.createContext();
 
-    return (
-      <input
-        {...this.props}
-        type="checkbox"
-        aria-checked={optional.checked}
-        name={name}
-        {...optional}
-      />
-    );
-  }
-}
+export const Checkbox = props =>
+  (
+    <Consumer>
+      {({ name, checkedValues, onChange }) => {
+        const optional = {};
+        if (checkedValues) {
+          optional.checked = (checkedValues.indexOf(props.value) >= 0);
+        }
+        if (typeof onChange === 'function') {
+          optional.onChange = onChange.bind(null, props.value);
+        }
+        return (<input
+          {...props}
+          type="checkbox"
+          aria-checked={optional.checked}
+          name={name}
+          {...optional}
+        />);
+      }}
+
+    </Consumer>
+  );
 
 Checkbox.defaultProps = {
   value: undefined,
@@ -32,42 +34,18 @@ Checkbox.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
 };
 
-Checkbox.contextTypes = {
-  radioGroup: PropTypes.object,
-};
-
 export class CheckboxGroup extends React.Component {
-  getChildContext() {
-    const { name, checkedValues } = this.props;
-    return {
-      checkboxGroup: {
-        name,
-        checkedValues,
-        onChange: this.onCheckboxChange,
-      },
-    };
-  }
-
   state = {
     checkedValues: this.props.checkedValues,
   };
 
   componentWillReceiveProps(newProps) {
-    if (newProps.value) {
+    if (newProps.checkedValues) {
       this.setState({
-        value: newProps.value,
+        checkedValues: newProps.checkedValues,
       });
     }
   }
-
-  render() {
-    const {
-      Component, name, checkedValues, onChange, children, ...rest
-    } = this.props;
-    return <Component role="group" {...rest}>{children}</Component>;
-  }
-
-  getValue = () => this.state.value;
 
   isControlledComponent = () => Boolean(this.props.checkedValues);
 
@@ -89,6 +67,23 @@ export class CheckboxGroup extends React.Component {
       this.props.onChange(newValues, event, this.props.name);
     }
   };
+
+  render() {
+    const {
+      Component, name, checkedValues, onChange, children, ...rest
+    } = this.props;
+
+    return (
+      <Provider value={{
+        name,
+        checkedValues,
+        onChange: this.onCheckboxChange,
+      }}
+      >
+        <Component role="group" {...rest}>{children}</Component>
+      </Provider>
+    );
+  }
 }
 
 CheckboxGroup.defaultProps = {
@@ -108,8 +103,4 @@ CheckboxGroup.propTypes = {
     PropTypes.func,
     PropTypes.object,
   ]),
-};
-
-CheckboxGroup.childContextTypes = {
-  checkboxGroup: PropTypes.object,
 };

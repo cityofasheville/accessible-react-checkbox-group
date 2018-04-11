@@ -30,14 +30,13 @@ class Demo extends Component {
       <div>
         <h1>accessible-react-checkbox-group Demo</h1>
         <CheckboxGroup
-          checkboxDepth={2} // This is needed to optimize the checkbox group
           name="fruits"
-          value={this.state.fruits}
+          checkedValues={this.state.fruits}
           onChange={this.fruitsChanged}
         >
-          <label><Checkbox value="apple" disabled /> Apple</label>
-          <label><Checkbox value="orange" /> Orange</label>
-          <label><Checkbox value="watermelon" /> Watermelon</label>
+          <label htmlFor="apple-checkbox"><Checkbox id="apple-checkbox" value="apple" /> Apple</label>
+          <label htmlFor="orange-checkbox"><Checkbox id="orange-checkbox" value="orange" /> Orange</label>
+          <label htmlFor="watermelon-checkbox"><Checkbox id="watermelon-checkbox" value="watermelon" /> Watermelon</label>
         </CheckboxGroup>
       </div>
     );
