@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import { CheckboxGroup, Checkbox } from '../../src';
+import { CheckboxGroup, Checkbox, LabelledCheckbox } from '../../src';
 
 class Demo extends Component {
   constructor(props) {
@@ -33,8 +33,10 @@ class Demo extends Component {
           name="fruits"
           checkedValues={this.state.fruits}
           onChange={this.fruitsChanged}
+          // Component="fieldset"
         >
-          <label htmlFor="apple-checkbox"><Checkbox id="apple-checkbox" value="apple" /> Apple</label>
+          {/* <legend>Fruit Selection</legend> */}
+          <LabelledCheckbox value="apple" label=" Apple" />
           <label htmlFor="orange-checkbox"><Checkbox id="orange-checkbox" value="orange" /> Orange</label>
           <label htmlFor="watermelon-checkbox"><Checkbox id="watermelon-checkbox" value="watermelon" /> Watermelon</label>
         </CheckboxGroup>

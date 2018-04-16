@@ -6,7 +6,7 @@
 
 ## About
 This is a remake of [react-checkbox-group](https://github.com/ziad-saab/react-checkbox-group)
-that adds proper accessibility support. Some other issues are also fixed,
+that adds full accessibility support. Some other issues are also fixed,
 such as using React's context API for efficiency and to allow for HOCs.
 
 ## Reasoning

@@ -1,30 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import namor from 'namor';
 
 const { Provider, Consumer } = React.createContext();
 
-export const Checkbox = props =>
-  (
-    <Consumer>
-      {({ name, checkedValues, onChange }) => {
-        const optional = {};
-        if (checkedValues) {
-          optional.checked = (checkedValues.indexOf(props.value) >= 0);
-        }
-        if (typeof onChange === 'function') {
-          optional.onChange = onChange.bind(null, props.value);
-        }
-        return (<input
-          {...props}
-          type="checkbox"
-          aria-checked={optional.checked}
-          name={name}
-          {...optional}
-        />);
-      }}
+export const Checkbox = props => (
+  <Consumer>
+    {({ name, checkedValues, onChange }) => {
+      const optional = {};
+      if (checkedValues) {
+        optional.checked = (checkedValues.indexOf(props.value) >= 0);
+      }
+      if (typeof onChange === 'function') {
+        optional.onChange = onChange.bind(null, props.value);
+      }
+      return (<input
+        {...props}
+        type="checkbox"
+        name={name}
+        {...optional}
+      />);
+    }}
 
-    </Consumer>
-  );
+  </Consumer>
+);
 
 Checkbox.defaultProps = {
   value: undefined,
@@ -32,6 +31,38 @@ Checkbox.defaultProps = {
 
 Checkbox.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
+};
+
+export const LabelledCheckbox = (props) => {
+  const { id, label, value, render, ...rest } = props;
+  let realId = id;
+  if (!id) {
+    realId = namor.generate({ words: 2 });
+  }
+
+  // const checkbox = <label htmlFor={realId}><Checkbox id={realId} value {...rest} />{(label || value) || ''}</label>;
+  //
+  // return render(checkbox);
+  return (
+    <div style={{ margin: '6px 0' }}>
+      <Checkbox id={realId} value={value} {...rest} />
+      <label style={{ display: 'inline-block', width: '120px', verticalAlign: 'top' }} htmlFor={realId}>{(label || value) || ''}</label>
+    </div>
+  );
+};
+
+LabelledCheckbox.defaultProps = {
+  id: undefined,
+  label: undefined,
+  value: undefined,
+  render: checkbox => <div>{checkbox}</div>,
+};
+
+LabelledCheckbox.propTypes = {
+  id: PropTypes.string,
+  label: PropTypes.node,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
+  render: PropTypes.func,
 };
 
 export class CheckboxGroup extends React.Component {
@@ -69,17 +100,10 @@ export class CheckboxGroup extends React.Component {
   };
 
   render() {
-    const {
-      Component, name, checkedValues, onChange, children, ...rest
-    } = this.props;
+    const { Component, name, checkedValues, onChange, children, ...rest } = this.props;
 
     return (
-      <Provider value={{
-        name,
-        checkedValues,
-        onChange: this.onCheckboxChange,
-      }}
-      >
+      <Provider value={{ name, checkedValues, onChange: this.onCheckboxChange }}>
         <Component role="group" {...rest}>{children}</Component>
       </Provider>
     );
@@ -98,9 +122,5 @@ CheckboxGroup.propTypes = {
   checkedValues: PropTypes.arrayOf(PropTypes.string, PropTypes.number, PropTypes.bool),
   onChange: PropTypes.func,
   children: PropTypes.node.isRequired,
-  Component: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.func,
-    PropTypes.object,
-  ]),
+  Component: PropTypes.element,
 };
