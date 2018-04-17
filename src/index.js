@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import namor from 'namor';
 
 const { Provider, Consumer } = React.createContext();
 
@@ -31,38 +30,6 @@ Checkbox.defaultProps = {
 
 Checkbox.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
-};
-
-export const LabelledCheckbox = (props) => {
-  const { id, label, value, render, ...rest } = props;
-  let realId = id;
-  if (!id) {
-    realId = namor.generate({ words: 2 });
-  }
-
-  // const checkbox = <label htmlFor={realId}><Checkbox id={realId} value {...rest} />{(label || value) || ''}</label>;
-  //
-  // return render(checkbox);
-  return (
-    <div style={{ margin: '6px 0' }}>
-      <Checkbox id={realId} value={value} {...rest} />
-      <label style={{ display: 'inline-block', width: '120px', verticalAlign: 'top' }} htmlFor={realId}>{(label || value) || ''}</label>
-    </div>
-  );
-};
-
-LabelledCheckbox.defaultProps = {
-  id: undefined,
-  label: undefined,
-  value: undefined,
-  render: checkbox => <div>{checkbox}</div>,
-};
-
-LabelledCheckbox.propTypes = {
-  id: PropTypes.string,
-  label: PropTypes.node,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
-  render: PropTypes.func,
 };
 
 export class CheckboxGroup extends React.Component {

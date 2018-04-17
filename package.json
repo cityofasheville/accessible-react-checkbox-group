@@ -23,8 +23,7 @@
     "url": "git+https://github.com/dumptruckman/accessible-react-checkbox-group.git"
   },
   "dependencies": {
-    "merge-prop-functions": "^1.1.0",
-    "namor": "^1.0.1"
+    "merge-prop-functions": "^1.1.0"
   },
   "peerDependencies": {
     "react": "16.x",

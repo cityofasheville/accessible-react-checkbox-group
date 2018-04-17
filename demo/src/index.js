@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import { CheckboxGroup, Checkbox, LabelledCheckbox } from '../../src';
+import { CheckboxGroup, Checkbox } from '../../src';
 
 class Demo extends Component {
   constructor(props) {
@@ -27,20 +27,20 @@ class Demo extends Component {
 
   render() {
     return (
-      <div>
+      <form>
         <h1>accessible-react-checkbox-group Demo</h1>
         <CheckboxGroup
           name="fruits"
           checkedValues={this.state.fruits}
           onChange={this.fruitsChanged}
-          // Component="fieldset"
+          Component="fieldset"
         >
-          {/* <legend>Fruit Selection</legend> */}
-          <LabelledCheckbox value="apple" label=" Apple" />
-          <label htmlFor="orange-checkbox"><Checkbox id="orange-checkbox" value="orange" /> Orange</label>
-          <label htmlFor="watermelon-checkbox"><Checkbox id="watermelon-checkbox" value="watermelon" /> Watermelon</label>
+          <legend>Fruit Selection</legend>
+          <label><Checkbox value="apple" /> Apple</label>
+          <label><Checkbox value="orange" /> Orange</label>
+          <label><Checkbox value="watermelon" /> Watermelon</label>
         </CheckboxGroup>
-      </div>
+      </form>
     );
   }
 }

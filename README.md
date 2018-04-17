@@ -25,7 +25,7 @@ Repetitive, hard to manipulate and easily desynchronized.
 Lift up `name` and `onChange`, and give the group an initial checked values array:
 
 ```javascript
-import {Checkbox, CheckboxGroup} from 'react-checkbox-group';
+import {Checkbox, CheckboxGroup} from 'accessible-react-checkbox-group';
 
 <CheckboxGroup name="fruits" checkedValues={['kiwi', 'pineapple']} onChange={this.fruitsChanged}>
   <Checkbox value="kiwi"/>
