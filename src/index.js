@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const { Provider, Consumer } = React.createContext();
+export const CheckboxGroupContext = React.createContext();
+
+const { Provider, Consumer } = CheckboxGroupContext;
 
 export const Checkbox = props => (
   <Consumer>
