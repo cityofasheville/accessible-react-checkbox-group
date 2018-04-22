@@ -27,7 +27,6 @@
   },
   "peerDependencies": {
     "react": "16.x",
-    "react-checkbox-group": "^4.0.1",
     "react-dom": "16.x",
     "prop-types": "15.x"
   },
