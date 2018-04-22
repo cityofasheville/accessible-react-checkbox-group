@@ -51,10 +51,10 @@ export class CheckboxGroup extends React.Component {
 
   onCheckboxChange = (checkboxValue, event) => {
     let newValues;
-    if (event.target.checked) {
-      newValues = this.state.checkedValues.concat(checkboxValue);
-    } else {
+    if (this.state.checkedValues.includes(checkboxValue)) {
       newValues = this.state.checkedValues.filter(v => v !== checkboxValue);
+    } else {
+      newValues = this.state.checkedValues.concat(checkboxValue);
     }
 
     if (this.isControlledComponent()) {
