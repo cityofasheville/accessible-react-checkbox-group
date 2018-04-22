@@ -16,10 +16,10 @@ export const Checkbox = props => (
         optional.onChange = onChange.bind(null, props.value);
       }
       return (<input
-        {...optional}
         {...props}
         type="checkbox"
         name={name}
+        {...optional}
       />);
     }}
 
