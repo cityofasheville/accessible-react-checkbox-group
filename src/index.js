@@ -91,5 +91,5 @@ CheckboxGroup.propTypes = {
   checkedValues: PropTypes.arrayOf(PropTypes.string, PropTypes.number, PropTypes.bool),
   onChange: PropTypes.func,
   children: PropTypes.node.isRequired,
-  Component: PropTypes.element,
+  Component: PropTypes.node,
 };
