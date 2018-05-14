@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const CheckboxGroupContext = React.createContext(undefined);
+export const CheckboxGroupContext = React.createContext(undefined);
 
 const extractContext = (contextValue, checkboxValue, props) => {
   // For some reason if we destructure values in the params hot reloading doesn't work
