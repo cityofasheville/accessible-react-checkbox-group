@@ -1,16 +1,14 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
-const libraryName = 'library';
-
-const outputFile = `${libraryName}.js`;
 
 module.exports = {
   entry: path.join(__dirname, 'demo/src/demo.js'),
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: outputFile,
+    filename: 'index.js',
   },
+  devtool: 'eval-source-map',
   module: {
     rules: [
       {
@@ -31,13 +29,13 @@ module.exports = {
     ],
   },
   plugins: [
+    new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'demo/src/index.html'),
     }),
   ],
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
     port: 3000,
-    watchContentBase: true,
+    hot: true,
   },
 };

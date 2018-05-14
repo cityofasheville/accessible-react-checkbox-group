@@ -1,6 +1,6 @@
 {
   "parser": "babel-eslint",
-  "extends": "airbnb",
+  "extends": ["airbnb", "prettier"],
   "env": {
     "browser": true,
     "node": true,
@@ -9,12 +9,14 @@
   "plugins": [
     "react",
     "jsx-a11y",
-    "import"
+    "import",
+    "prettier"
   ],
   "rules": {
+    "prettier/prettier": "error",
     "jsx-a11y/aria-props": 2,
     "jsx-a11y/heading-has-content": 2,
-    "jsx-a11y/label-has-for": [ 2, {
+    "jsx-a11y/label-has-for": [ 1, {
       "components": [ "Label" ],
       "required": {
         "some": [ "nesting", "id" ]
