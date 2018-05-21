@@ -1,41 +1,41 @@
-const path = require('path');
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require("path");
+const webpack = require("webpack");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: path.join(__dirname, 'demo/src/demo.js'),
+  entry: path.join(__dirname, "demo/src/demo.js"),
   output: {
-    path: path.join(__dirname, 'dist'),
-    filename: 'index.js',
+    path: path.join(__dirname, "dist"),
+    filename: "index.js"
   },
-  devtool: 'eval-source-map',
+  devtool: "eval-source-map",
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
-        },
+          loader: "babel-loader"
+        }
       },
       {
         test: /\.(js|jsx)$/,
-        enforce: 'pre',
+        enforce: "pre",
         use: {
-          loader: 'eslint-loader',
+          loader: "eslint-loader"
         },
-        exclude: /node_modules/,
-      },
-    ],
+        exclude: /node_modules/
+      }
+    ]
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'demo/src/index.html'),
-    }),
+      template: path.join(__dirname, "demo/src/index.html")
+    })
   ],
   devServer: {
     port: 3000,
-    hot: true,
-  },
+    hot: true
+  }
 };
