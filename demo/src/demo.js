@@ -81,54 +81,50 @@ class Demo extends Component {
           </label>
         </CheckboxGroup>
 
-        <CheckboxGroup
-          name="fruits2"
-          values={[
-            {
-              value: "all",
-              label: "All",
-              props: {
-                disabled: true
-              }
-            },
-            {
-              value: "apple",
-              label: "Apple"
-            },
-            {
-              value: "orange",
-              label: "Orange"
-            },
-            "watermelon"
-          ]}
-          checkedValues={this.state.fruits}
-          indeterminateValues={this.state.indeterminates}
-          onChange={this.fruitsChanged}
-          Component="fieldset"
-          checkboxRenderer={(
-            CheckboxComponent,
-            index,
-            { value, label, optional }
-          ) => (
-            <div
-              key={[value, index].join(" ")}
-              style={{
-                border: "1px solid black",
-                backgroundColor: optional.checked ? "lightblue" : "grey"
-              }}
-            >
-              <label>
-                <CheckboxComponent /> {label}
-              </label>
-            </div>
-          )}
-          groupRenderer={(GroupComponent, props) => (
-            <GroupComponent>
-              <legend>Render Props Fruit Selection</legend>
-              {props.children}
-            </GroupComponent>
-          )}
-        />
+        <fieldset>
+          <legend>Render Props Fruit Selection</legend>
+          <CheckboxGroup
+            name="fruits2"
+            values={[
+              {
+                value: "all",
+                label: "All",
+                props: {
+                  disabled: true
+                }
+              },
+              {
+                value: "apple",
+                label: "Apple"
+              },
+              {
+                value: "orange",
+                label: "Orange"
+              },
+              "watermelon"
+            ]}
+            checkedValues={this.state.fruits}
+            indeterminateValues={this.state.indeterminates}
+            onChange={this.fruitsChanged}
+            checkboxRenderer={(
+              CheckboxComponent,
+              index,
+              { value, label, optional }
+            ) => (
+              <div
+                key={[value, index].join(" ")}
+                style={{
+                  border: "1px solid black",
+                  backgroundColor: optional.checked ? "lightblue" : "grey"
+                }}
+              >
+                <label>
+                  {CheckboxComponent} {label}
+                </label>
+              </div>
+            )}
+          />
+        </fieldset>
       </form>
     );
   }

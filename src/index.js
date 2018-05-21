@@ -176,7 +176,7 @@ export class CheckboxGroup extends React.Component {
         label = checkboxValue;
       }
 
-      const CheckboxComponent = () => (
+      const CheckboxComponent = (
         <PreContextualizedCheckbox
           key={[checkboxValue, index].join(" ")}
           name={name}
@@ -207,7 +207,6 @@ export class CheckboxGroup extends React.Component {
       onIndeterminate,
       children,
       checkboxRenderer,
-      groupRenderer,
       ...rest
     } = this.props;
 
@@ -219,19 +218,12 @@ export class CheckboxGroup extends React.Component {
       toggleIndeterminate: this.onCheckboxIndeterminate
     };
 
-    const GroupComponent = ({ children: groupChildren }) => (
-      <Component role="group" {...rest}>
-        {groupChildren}
-      </Component>
-    );
-
     return (
       <CheckboxGroupContext.Provider value={providedValue}>
-        {groupRenderer(GroupComponent, {
-          children:
-            children ||
-            this.createChildren(values, checkboxRenderer, providedValue)
-        })}
+        <Component {...rest}>
+          {children ||
+            this.createChildren(values, checkboxRenderer, providedValue)}
+        </Component>
       </CheckboxGroupContext.Provider>
     );
   }
@@ -259,15 +251,9 @@ CheckboxGroup.defaultProps = {
   children: undefined,
   Component: "div",
   checkboxRenderer: (CheckboxComponent, index, { value, label }) => (
-    // eslint-disable-next-line react/prop-types
     <label key={[value, index].join(" ")}>
-      {/* eslint-disable-next-line react/prop-types */}
-      <CheckboxComponent /> {label}
+      {CheckboxComponent} {label}
     </label>
-  ),
-  groupRenderer: (GroupComponent, props) => (
-    // eslint-disable-next-line react/prop-types
-    <GroupComponent>{props.children}</GroupComponent>
   )
 };
 
@@ -292,6 +278,5 @@ CheckboxGroup.propTypes = {
   onIndeterminate: PropTypes.func,
   children: PropTypes.node,
   Component: PropTypes.node,
-  checkboxRenderer: PropTypes.func,
-  groupRenderer: PropTypes.func
+  checkboxRenderer: PropTypes.func
 };
