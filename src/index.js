@@ -1,5 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 export const CheckboxGroupContext = React.createContext(undefined);
 
@@ -12,10 +12,9 @@ const extractContext = (contextValue, checkboxValue, props) => {
   }
 
   if (indeterminateValues) {
-    optional.indeterminate =
-      indeterminateValues.indexOf(checkboxValue) >= 0 ? true : undefined;
+    optional.indeterminate = indeterminateValues.indexOf(checkboxValue) >= 0 ? true : undefined;
   }
-  if (typeof onChange === "function") {
+  if (typeof onChange === 'function') {
     optional.onChange = onChange.bind(null, checkboxValue);
   }
 
@@ -24,12 +23,12 @@ const extractContext = (contextValue, checkboxValue, props) => {
 
 const PreContextualizedCheckbox = ({ value, indeterminate, ...restProps }) => (
   <input
-    aria-checked={indeterminate ? "mixed" : restProps.checked.toString()}
+    aria-checked={indeterminate ? 'mixed' : restProps.checked.toString()}
     type="checkbox"
     ref={elem => {
       if (elem) {
         // eslint-disable-next-line no-param-reassign
-        elem.indeterminate = indeterminate ? "true" : undefined;
+        elem.indeterminate = indeterminate ? 'true' : undefined;
       }
     }}
     {...restProps}
@@ -41,29 +40,21 @@ PreContextualizedCheckbox.defaultProps = {
   name: undefined,
   checked: false,
   indeterminate: undefined,
-  onChange: undefined
+  onChange: undefined,
 };
 
 PreContextualizedCheckbox.propTypes = {
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.bool
-  ]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
   name: PropTypes.string,
   checked: PropTypes.bool,
   indeterminate: PropTypes.bool,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
 };
 
 export const Checkbox = props => (
   <CheckboxGroupContext.Consumer>
     {value => {
-      const { name, optional, ...rest } = extractContext(
-        value,
-        props.value,
-        props
-      );
+      const { name, optional, ...rest } = extractContext(value, props.value, props);
       return (
         <PreContextualizedCheckbox
           name={name}
@@ -78,32 +69,28 @@ export const Checkbox = props => (
 );
 
 Checkbox.defaultProps = {
-  value: undefined
+  value: undefined,
 };
 
 Checkbox.propTypes = {
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.bool
-  ])
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
 };
 
 export class CheckboxGroup extends React.Component {
   state = {
     checkedValues: this.props.checkedValues,
-    indeterminateValues: this.props.indeterminateValues
+    indeterminateValues: this.props.indeterminateValues,
   };
 
   componentWillReceiveProps(newProps) {
     if (newProps.checkedValues) {
       this.setState({
-        checkedValues: newProps.checkedValues
+        checkedValues: newProps.checkedValues,
       });
     }
     if (newProps.indeterminateValues) {
       this.setState({
-        indeterminateValues: newProps.indeterminateValues
+        indeterminateValues: newProps.indeterminateValues,
       });
     }
   }
@@ -124,7 +111,7 @@ export class CheckboxGroup extends React.Component {
       this.setState({ checkedValues: newValues });
     }
 
-    if (typeof this.props.onChange === "function") {
+    if (typeof this.props.onChange === 'function') {
       this.props.onChange(newValues, event, this.props.name);
     }
   };
@@ -132,9 +119,7 @@ export class CheckboxGroup extends React.Component {
   onCheckboxIndeterminate = (checkboxValue, event) => {
     let newValues;
     if (this.state.indeterminateValues.includes(checkboxValue)) {
-      newValues = this.state.indeterminateValues.filter(
-        v => v !== checkboxValue
-      );
+      newValues = this.state.indeterminateValues.filter(v => v !== checkboxValue);
     } else {
       newValues = this.state.indeterminateValues.concat(checkboxValue);
     }
@@ -145,7 +130,7 @@ export class CheckboxGroup extends React.Component {
       this.setState({ indeterminateValues: newValues });
     }
 
-    if (typeof this.props.onIndeterminate === "function") {
+    if (typeof this.props.onIndeterminate === 'function') {
       this.props.onIndeterminate(newValues, event, this.props.name);
     }
   };
@@ -157,20 +142,16 @@ export class CheckboxGroup extends React.Component {
       let label;
 
       // value may be the direct value or an object with a value prop.
-      if (typeof value === "object") {
+      if (typeof value === 'object') {
         checkboxValue = value.value;
         props = value.props ? value.props : {};
         label = value.label ? value.label : checkboxValue;
       }
 
-      const { name, optional, ...rest } = extractContext(
-        providedValue,
-        checkboxValue,
-        props
-      );
+      const { name, optional, ...rest } = extractContext(providedValue, checkboxValue, props);
 
       // label may be a function to return the label string or just the label string
-      if (label && {}.toString.call(label) === "[object Function]") {
+      if (label && {}.toString.call(label) === '[object Function]') {
         label = label();
       } else if (!label) {
         label = checkboxValue;
@@ -178,7 +159,7 @@ export class CheckboxGroup extends React.Component {
 
       const CheckboxComponent = (
         <PreContextualizedCheckbox
-          key={[checkboxValue, index].join(" ")}
+          key={[checkboxValue, index].join(' ')}
           name={name}
           checked={optional.checked}
           indeterminate={optional.indeterminate}
@@ -192,7 +173,7 @@ export class CheckboxGroup extends React.Component {
         value: checkboxValue,
         name,
         optional,
-        ...props
+        ...props,
       });
     });
 
@@ -215,14 +196,13 @@ export class CheckboxGroup extends React.Component {
       checkedValues,
       indeterminateValues,
       onChange: this.onCheckboxChange,
-      toggleIndeterminate: this.onCheckboxIndeterminate
+      toggleIndeterminate: this.onCheckboxIndeterminate,
     };
 
     return (
       <CheckboxGroupContext.Provider value={providedValue}>
         <Component {...rest}>
-          {children ||
-            this.createChildren(values, checkboxRenderer, providedValue)}
+          {children || this.createChildren(values, checkboxRenderer, providedValue)}
         </Component>
       </CheckboxGroupContext.Provider>
     );
@@ -231,13 +211,9 @@ export class CheckboxGroup extends React.Component {
 
 // Tbe shape of a checkbox value
 const valueShape = {
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.bool
-  ]).isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]).isRequired,
   label: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-  props: PropTypes.objectOf(PropTypes.any)
+  props: PropTypes.objectOf(PropTypes.any),
 };
 valueShape.children = PropTypes.arrayOf(PropTypes.shape(valueShape));
 
@@ -249,12 +225,12 @@ CheckboxGroup.defaultProps = {
   onChange: undefined,
   onIndeterminate: undefined,
   children: undefined,
-  Component: "div",
+  Component: 'div',
   checkboxRenderer: (CheckboxComponent, index, { value, label }) => (
-    <label key={[value, index].join(" ")}>
+    <label key={[value, index].join(' ')}>
       {CheckboxComponent} {label}
     </label>
-  )
+  ),
 };
 
 CheckboxGroup.propTypes = {
@@ -264,7 +240,7 @@ CheckboxGroup.propTypes = {
       PropTypes.string,
       PropTypes.number,
       PropTypes.bool,
-      PropTypes.shape(valueShape)
+      PropTypes.shape(valueShape),
     ])
   ),
   // values: PropTypes.arrayOf(PropTypes.shape(valueShape)),
@@ -278,5 +254,5 @@ CheckboxGroup.propTypes = {
   onIndeterminate: PropTypes.func,
   children: PropTypes.node,
   Component: PropTypes.node,
-  checkboxRenderer: PropTypes.func
+  checkboxRenderer: PropTypes.func,
 };

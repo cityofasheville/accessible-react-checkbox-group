@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import { render } from "react-dom";
-import { CheckboxGroup, Checkbox } from "../../src";
+import React, { Component } from 'react';
+import { render } from 'react-dom';
+import { CheckboxGroup, Checkbox } from '../../src';
 
 class Demo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fruits: ["all", "apple", "watermelon"],
+      fruits: ['all', 'apple', 'watermelon'],
       // indeterminates must be specified initially since the group component does not know all possible values
-      indeterminates: ["all"]
+      indeterminates: ['all'],
     };
   }
 
@@ -16,41 +16,30 @@ class Demo extends Component {
     // Add orange and remove watermelon after 5 seconds
     setTimeout(() => {
       this.setState({
-        fruits: ["all", "apple", "orange"],
-        indeterminates: ["all"]
+        fruits: ['all', 'apple', 'orange'],
+        indeterminates: ['all'],
       });
     }, 5000);
   }
 
   fruitsChanged = newFruits => {
-    let f = newFruits.filter(e => e !== "all");
+    let f = newFruits.filter(e => e !== 'all');
     let indeterminates = [];
 
-    if (!this.state.fruits.includes("all") && newFruits.includes("all")) {
-      f = ["apple", "orange", "watermelon", "all"];
-    } else if (
-      this.state.fruits.includes("all") &&
-      !newFruits.includes("all")
-    ) {
+    if (!this.state.fruits.includes('all') && newFruits.includes('all')) {
+      f = ['apple', 'orange', 'watermelon', 'all'];
+    } else if (this.state.fruits.includes('all') && !newFruits.includes('all')) {
       f = [];
-    } else if (
-      f.includes("apple") &&
-      f.includes("orange") &&
-      f.includes("watermelon")
-    ) {
-      f = [...f, "all"];
-    } else if (
-      f.includes("apple") ||
-      f.includes("orange") ||
-      f.includes("watermelon")
-    ) {
-      f = [...f, "all"];
-      indeterminates = ["all"];
+    } else if (f.includes('apple') && f.includes('orange') && f.includes('watermelon')) {
+      f = [...f, 'all'];
+    } else if (f.includes('apple') || f.includes('orange') || f.includes('watermelon')) {
+      f = [...f, 'all'];
+      indeterminates = ['all'];
     }
 
     this.setState({
       fruits: f,
-      indeterminates
+      indeterminates,
     });
   };
 
@@ -87,35 +76,31 @@ class Demo extends Component {
             name="fruits2"
             values={[
               {
-                value: "all",
-                label: "All",
+                value: 'all',
+                label: 'All',
                 props: {
-                  disabled: true
-                }
+                  disabled: true,
+                },
               },
               {
-                value: "apple",
-                label: "Apple"
+                value: 'apple',
+                label: 'Apple',
               },
               {
-                value: "orange",
-                label: "Orange"
+                value: 'orange',
+                label: 'Orange',
               },
-              "watermelon"
+              'watermelon',
             ]}
             checkedValues={this.state.fruits}
             indeterminateValues={this.state.indeterminates}
             onChange={this.fruitsChanged}
-            checkboxRenderer={(
-              CheckboxComponent,
-              index,
-              { value, label, optional }
-            ) => (
+            checkboxRenderer={(CheckboxComponent, index, { value, label, optional }) => (
               <div
-                key={[value, index].join(" ")}
+                key={[value, index].join(' ')}
                 style={{
-                  border: "1px solid black",
-                  backgroundColor: optional.checked ? "lightblue" : "grey"
+                  border: '1px solid black',
+                  backgroundColor: optional.checked ? 'lightblue' : 'grey',
                 }}
               >
                 <label>
@@ -130,4 +115,4 @@ class Demo extends Component {
   }
 }
 
-render(<Demo />, document.getElementById("app"));
+render(<Demo />, document.getElementById('app'));
