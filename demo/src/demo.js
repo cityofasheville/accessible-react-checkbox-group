@@ -95,12 +95,12 @@ class Demo extends Component {
             checkedValues={this.state.fruits}
             indeterminateValues={this.state.indeterminates}
             onChange={this.fruitsChanged}
-            checkboxRenderer={(CheckboxComponent, index, { value, label, optional }) => (
+            checkboxRenderer={(CheckboxComponent, index, { value, label, options }) => (
               <div
                 key={[value, index].join(' ')}
                 style={{
                   border: '1px solid black',
-                  backgroundColor: optional.checked ? 'lightblue' : 'grey',
+                  backgroundColor: options.checked ? 'lightblue' : 'grey',
                 }}
               >
                 <label>

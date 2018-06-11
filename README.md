@@ -75,57 +75,8 @@ var CheckboxGroup = Check.CheckboxGroup;
 import {Checkbox, CheckboxGroup} from 'accessible-react-checkbox-group';
 ```
 
-## Nested `Checkbox`
-If you render `Checkbox`es deeply nested inside the `CheckboxGroup`, you need to pass a `checkboxDepth` prop to the `CheckboxGroup` so that it can manage the checkboxes without too much overhead.
-
-This is shown in the example below where the `<Checkbox>` elements are nested inside `<label>`s.
-
-## Example
-
-```javascript
-class Demo extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      fruits: ['apple','watermelon']
-    };
-  }
-
-  componentDidMount() {
-    // Add orange and remove watermelon after 5 seconds
-    setTimeout(() => {
-      this.setState({
-        fruits: ['apple','orange']
-      });
-    }, 5000);
-  }
-
-  render() {
-    // the checkboxes can be arbitrarily deep. They will always be fetched and
-    // attached the `name` attribute correctly. `checkedValues` is optional
-    return (
-      <CheckboxGroup
-        name="fruits"
-        checkedValues={this.state.fruits}
-        onChange={this.fruitsChanged}>
-
-        <label htmlFor="apple-checkbox"><Checkbox id="apple-checkbox" value="apple" /> Apple</label>
-        <label htmlFor="orange-checkbox"><Checkbox id="orange-checkbox" value="orange" /> Orange</label>
-        <label htmlFor="watermelon-checkbox"><Checkbox id="watermelon-checkbox" value="watermelon" /> Watermelon</label>
-      </CheckboxGroup>
-    );
-  }
-
-  fruitsChanged = (newFruits) => {
-    this.setState({
-      fruits: newFruits
-    });
-  }
-
-};
-
-ReactDOM.render(<Demo/>, document.body);
-```
+## How to Contribute
+Please check out [CONTRIBUTING.md](CONTRIBUTING.md) for information on contributing.
 
 [build-badge]: https://img.shields.io/travis/dumptruckman/accessible-react-checkbox-group/master.png?style=flat-square
 [build]: https://travis-ci.org/dumptruckman/accessible-react-checkbox-group
